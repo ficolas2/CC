@@ -1,3 +1,10 @@
+
+local oldTurtle = {}
+
+for k, v in pairs(turtle) do
+    oldTurtle[k] = v
+end
+
 function doYMovement()
     -- +y movement
     while dy > 0 do
@@ -12,16 +19,17 @@ function doYMovement()
     end
 end
 
-function turtle.forward(amount=1)
+
+turtle.forward = function(amount=1)
     for i = 1, amount do
-        moved = turtle.forward()
+        moved = oldTurtle.forward()
         if (not moved) then
             return false
         end
     end
 end
 
-function turtle.goto(x, y, z, yFirst = true)
+turtle.goTo = function(x, y, z, yFirst = true)
     --must be pointing towards +x direction
     local c_x, c_y, c_z = gps.locate()
     if c_x == nil then
