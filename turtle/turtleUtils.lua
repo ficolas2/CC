@@ -20,8 +20,10 @@ function doYMovement()
 end
 
 
-turtle.forward = function(amount=1)
+turtle.forward = function(amount)
     for i = 1, amount do
+        if (amount == nil) then amount = 1 end
+
         moved = oldTurtle.forward()
         if (~moved) then
             return false
@@ -29,7 +31,8 @@ turtle.forward = function(amount=1)
     end
 end
 
-turtle.goTo = function(x, y, z, yFirst = true)
+turtle.goTo = function(x, y, z, yFirst)
+    if (yFirst == nil) then yFirst = true end
     --must be pointing towards +x direction
     local c_x, c_y, c_z = gps.locate()
     if c_x == nil then
