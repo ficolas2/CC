@@ -6,7 +6,7 @@ rows = 2
 columns = 2
 spacing = 5
 
-goTo(base.x, base.y, base.z)
+turtle.goTo(base.x, base.y, base.z)
 
 function placeSappling()
     turtle.select(1)
