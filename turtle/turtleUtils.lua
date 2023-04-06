@@ -23,7 +23,7 @@ end
 turtle.forward = function(amount=1)
     for i = 1, amount do
         moved = oldTurtle.forward()
-        if (not moved) then
+        if (~moved) then
             return false
         end
     end
@@ -72,6 +72,6 @@ turtle.goTo = function(x, y, z, yFirst = true)
 
     turtle.turnLeft()
 
-    if (not yFirst) then doYMovement() end
+    if (~yFirst) then doYMovement() end
 
 end
