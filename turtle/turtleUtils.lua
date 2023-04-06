@@ -5,27 +5,57 @@ for k, v in pairs(turtle) do
     oldTurtle[k] = v
 end
 
-function doYMovement()
-    -- +y movement
-    while dy > 0 do
-        dy = dy - 1
-        while (not turtle.up()) do end
+turtle.forward = function(amount)
+    if (amount == nil) then amount = 1 end
+    if (amount < 0) then
+        return turtle.back(-amount)
     end
+    for i = 1, amount do
 
-    -- -z movement
-    while dy < 0 do
-        dy = dy + 1
-        while (turtle.down()) do end
+        moved = oldTurtle.forward()
+        if (not moved) then
+            return false
+        end
     end
 end
 
-
-turtle.forward = function(amount)
+turtle.back = function(amount)
+    if (amount == nil) then amount = 1 end
+    if (amount < 0) then
+        return turtle.forward(-amount)
+    end
     for i = 1, amount do
-        if (amount == nil) then amount = 1 end
 
-        moved = oldTurtle.forward()
-        if (~moved) then
+        moved = oldTurtle.back()
+        if (not moved) then
+            return false
+        end
+    end
+end
+
+turtle.up = function(amount)
+    if (amount == nil) then amount = 1 end
+    if (amount < 0) then
+        return turtle.down(-amount)
+    end
+    for i = 1, amount do
+
+        moved = oldTurtle.up()
+        if (not moved) then
+            return false
+        end
+    end
+end
+
+turtle.down = function(amount)
+    if (amount == nil) then amount = 1 end
+    if (amount < 0) then
+        return turtle.up(-amount)
+    end
+    for i = 1, amount do
+
+        moved = oldTurtle.down()
+        if (not moved) then
             return false
         end
     end
@@ -41,40 +71,16 @@ turtle.goTo = function(x, y, z, yFirst)
     end
     dx, dy, dz = x - c_x, y - c_y, z - c_z
 
-    if (yFirst) then doYMovement() end
+    if (yFirst) then turtle.up(dy) end
 
-    -- +x movement
-    while dx > 0 do
-        dx = dx - 1
-        turtle.forward()
-    end
-
+    -- x movement
+    turtle.forward(dx)
     turtle.turnLeft()
 
     -- +z movement
-    while dz > 0 do
-        dz = dz - 1
-        turtle.forward()
-    end
+    turtle.forward(dz)
+    turtle.turnRight()
 
-    turtle.turnLeft()
-
-    -- -x movement
-    while dx < 0 do
-        dx = dx + 1
-        turtle.forward()
-    end
-
-    turtle.turnLeft()
-
-    -- -z movement
-    while dz < 0 do
-        dz = dz + 1
-        turtle.forward()
-    end
-
-    turtle.turnLeft()
-
-    if (~yFirst) then doYMovement() end
+    if (not yFirst) then turtle.up(dy) end
 
 end
